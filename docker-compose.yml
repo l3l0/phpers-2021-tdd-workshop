@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  base:
+    build:
+      context: ./
+      dockerfile: docker/base/Dockerfile
+    image: php-plain-base
+  application:
+    build:
+      context: ./
+      dockerfile: docker/dev/Dockerfile
+    image: php-plain-backend
+    volumes:
+      - ./docker/dev/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - .:/home/php-plain/project
+    ports:
+      - "9999:80"
+      - "8000"
